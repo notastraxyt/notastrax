@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloxd.io Texture Packs — NotAstrax</title>
+<style>
+  :root{
+    --bg:#0d0f1a;
+    --bg2:#151827;
+    --accent:#7c5cff;
+    --accent2:#ff5c8a;
+    --text:#eef0f8;
+    --muted:#9aa0b4;
+    --card:#171a2b;
+    --border:#2a2e45;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Segoe UI',Roboto,Arial,sans-serif;
+    background:radial-gradient(circle at 20% 20%,#1c1f33,var(--bg) 60%);
+    color:var(--text);
+    min-height:100vh;
+  }
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px 5%;
+    border-bottom:1px solid var(--border);
+    background:rgba(13,15,26,0.85);
+    backdrop-filter:blur(6px);
+    position:sticky;
+    top:0;
+    z-index:10;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:800;
+    font-size:1.3rem;
+    letter-spacing:0.5px;
+  }
+  .logo span{
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  nav button{
+    background:transparent;
+    border:1px solid var(--border);
+    color:var(--text);
+    padding:9px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:0.9rem;
+    transition:0.2s;
+  }
+  nav button:hover{
+    border-color:var(--accent);
+    background:rgba(124,92,255,0.1);
+  }
+  .hero{
+    text-align:center;
+    padding:70px 5% 40px;
+  }
+  .hero h1{
+    font-size:2.4rem;
+    margin-bottom:14px;
+  }
+  .hero h1 span{
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero p{
+    color:var(--muted);
+    max-width:600px;
+    margin:0 auto;
+    font-size:1.05rem;
+  }
+  .author-tag{
+    display:inline-block;
+    margin-top:18px;
+    padding:6px 16px;
+    border:1px solid var(--accent);
+    border-radius:999px;
+    font-size:0.85rem;
+    color:var(--accent);
+  }
+  main{
+    padding:20px 5% 80px;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+    gap:24px;
+    margin-top:30px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    transition:transform 0.2s, border-color 0.2s;
+  }
+  .card:hover{
+    transform:translateY(-4px);
+    border-color:var(--accent);
+  }
+  .thumb{
+    height:150px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:2.4rem;
+  }
+  .card-body{
+    padding:18px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    flex:1;
+  }
+  .card-body h3{
+    font-size:1.1rem;
+  }
+  .card-body p{
+    color:var(--muted);
+    font-size:0.88rem;
+    flex:1;
+  }
+  .meta{
+    display:flex;
+    justify-content:space-between;
+    font-size:0.78rem;
+    color:var(--muted);
+  }
+  .dl-btn{
+    margin-top:10px;
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    border:none;
+    color:#fff;
+    padding:10px;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+    font-size:0.9rem;
+    transition:opacity 0.2s;
+  }
+  .dl-btn:hover{opacity:0.85;}
+  footer{
+    text-align:center;
+    padding:30px 5%;
+    color:var(--muted);
+    font-size:0.85rem;
+    border-top:1px solid var(--border);
+  }
+  footer a{color:var(--accent);text-decoration:none;}
+
+  /* Modal */
+  .overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    padding:20px;
+  }
+  .overlay.active{display:flex;}
+  .modal{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:30px;
+    max-width:420px;
+    width:100%;
+    position:relative;
+  }
+  .modal h2{
+    margin-bottom:16px;
+    font-size:1.3rem;
+  }
+  .modal p{
+    color:var(--muted);
+    font-size:0.92rem;
+    line-height:1.6;
+    margin-bottom:10px;
+  }
+  .modal .close{
+    position:absolute;
+    top:14px;
+    right:18px;
+    background:none;
+    border:none;
+    color:var(--muted);
+    font-size:1.3rem;
+    cursor:pointer;
+  }
+  .credit-line{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .credit-line:last-of-type{border-bottom:none;}
+  .role{
+    color:var(--accent);
+    font-weight:600;
+    font-size:0.85rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Bloxd<span>Packs</span></div>
+  <nav>
+    <button onclick="openModal()">Credits</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Texture Packs for <span>Bloxd.io</span></h1>
+  <p>Download free texture packs to enhance your Bloxd.io gaming experience.</p>
+  <div class="author-tag">Packs made by NotAstrax</div>
+</section>
+
+<main>
+  <div class="grid" id="packGrid">
+    <!-- Les cartes sont générées en JS -->
+  </div>
+</main>
+
+<footer>
+  Site designed by <strong>SnipeCorp</strong> — Not officially affiliated with Bloxd.io.
+  <br>
+  <a href="#" onclick="openModal();return false;">View credits</a>
+</footer>
+
+<div class="overlay" id="creditOverlay">
+  <div class="modal">
+    <button class="close" onclick="closeModal()">✕</button>
+    <h2>Credits</h2>
+    <div class="credit-line">
+      <span>NotAstrax</span>
+      <span class="role">Texture pack creator</span>
+    </div>
+    <div class="credit-line">
+      <span>SnipeCorp</span>
+      <span class="role">Website design</span>
+    </div>
+    <p style="margin-top:16px;">Thanks for using this site. All packs remain the property of their respective creators.</p>
+  </div>
+</div>
+
+<script>
+  // Liste des texture packs — modifie ce tableau pour ajouter/retirer des packs
+  const packs = [
+    {
+      name: "Classic HD Pack",
+      desc: "A crisp upgrade to Bloxd.io's default textures, without changing the original style.",
+      icon: "🎨",
+      size: "4.2 MB",
+      version: "v1.0",
+      url: "#"
+    },
+    {
+      name: "Neon Pack",
+      desc: "Bright colors and a neon style for a game that stands out from the crowd.",
+      icon: "💡",
+      size: "3.8 MB",
+      version: "v1.2",
+      url: "#"
+    },
+    {
+      name: "Minimalist Pack",
+      desc: "Clean textures for better performance and improved readability.",
+      icon: "⬜",
+      size: "2.1 MB",
+      version: "v1.0",
+      url: "#"
+    },
+    {
+      name: "Dark Pack",
+      desc: "A dark, immersive vibe for your night sessions.",
+      icon: "🌑",
+      size: "3.5 MB",
+      version: "v1.1",
+      url: "#"
+    }
+  ];
+
+  const grid = document.getElementById('packGrid');
+  packs.forEach(pack => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="thumb">${pack.icon}</div>
+      <div class="card-body">
+        <h3>${pack.name}</h3>
+        <p>${pack.desc}</p>
+        <div class="meta">
+          <span>${pack.version}</span>
+          <span>${pack.size}</span>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  function openModal(){
+    document.getElementById('creditOverlay').classList.add('active');
+  }
+  function closeModal(){
+    document.getElementById('creditOverlay').classList.remove('active');
+  }
+  document.getElementById('creditOverlay').addEventListener('click', (e)=>{
+    if(e.target.id === 'creditOverlay') closeModal();
+  });
+</script>
+
+</body>
+</html>
